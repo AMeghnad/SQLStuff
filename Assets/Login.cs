@@ -32,4 +32,15 @@ public class Login : MonoBehaviour
         StartCoroutine(CreateAccount(userName, eMail, passWord));
         #endregion
     }
+
+    IEnumerator LoginAttempt(string username, string password)
+    {
+        string loginURL = "http:// localhost/loginsystem/login.php";
+        WWWForm loginForm = new WWWForm();
+        loginForm.AddField("username_Post", username);
+        loginForm.AddField("password_Post", password);
+        WWW www = new WWW(loginURL, loginForm);
+        yield return www;
+        Debug.Log(www.text);
+    }
 }
