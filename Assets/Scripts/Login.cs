@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Use these to send emails to anyone
-using System;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Security;
@@ -13,6 +12,12 @@ public class Login : MonoBehaviour
 {
     public string userName, eMail, passWord;
     public string notify = "";
+
+    [Header("Reset Code")]
+    private string resetCode;
+    private string codeCharacterList = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private int codeLength = 6;
+
     // Use this for initialization
     void Start()
     {
@@ -33,13 +38,13 @@ public class Login : MonoBehaviour
         {
             GUI.Box(new Rect(0, 0, Screen.width, scrH * 0.75f), notify);
         }
-        if (GUI.Button(new Rect(scrW, scrH, scrW, scrH), "Send"))
+        if (GUI.Button(new Rect(scrW, scrH, 2 * scrW, scrH), "Reset Password"))
         {
             MailMessage mail = new MailMessage();
 
             mail.From = new MailAddress("sqlunityclasssydney@gmail.com");
             mail.To.Add(eMail);
-            mail.Subject = "Reset Account";
+            mail.Subject = "Reset Password";
             mail.Body = "Click the link below to reset your password!";
 
             // Simple Mail Transfer Protocol
@@ -83,6 +88,20 @@ public class Login : MonoBehaviour
         WWW www = new WWW(loginURL, loginForm);
         yield return www;
         Debug.Log(www.text);
+    }
+
+    void ResetCode()
+    {
+        resetCode = "";
+        while (resetCode.Length < codeLength)
+        {
+            codeLength += codeCharacterList[UnityEngine.Random.Range(0, codeCharacterList.Length)];
+        }
+    }
+
+    void LoginButton()
+    {
+
     }
 
     void Register()
