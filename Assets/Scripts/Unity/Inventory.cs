@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
 			string[] current = itemList [i].Split ('|');
 			Weapon weapon = new Weapon (int.Parse(current[0]), current[1], int.Parse(current[2]), current[3], float.Parse(current[4]), current[5], current[6], int.Parse(current[7]));
 			weapons.Add (weapon.id, weapon);
-			Debug.Log (weapons [i].name);
+			//Debug.Log (weapons [i].name);
 		}
 		loaded = true;
 	}
